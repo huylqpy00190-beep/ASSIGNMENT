@@ -1,0 +1,9 @@
+<h3>Quản lý loại tin</h3>
+<form>
+  <input type="text" placeholder="Nhập tên loại tin">
+  <button type="submit">Thêm</button>
+</form>
+<ul>
+  <li>Văn hóa <a href="#">Sửa</a> | <a href="#">Xóa</a></li>
+  <li>Thể thao <a href="#">Sửa</a> | <a href="#">Xóa</a></li>
+</ul>

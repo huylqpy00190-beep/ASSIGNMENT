@@ -1,0 +1,5 @@
+<h3>Quản lý người dùng</h3>
+<table border="1" width="100%">
+  <tr><th>Tài khoản</th><th>Vai trò</th><th>Hành động</th></tr>
+  <tr><td>reporter01</td><td>Phóng viên</td><td><a href="#">Sửa</a> | <a href="#">Xóa</a></td></tr>
+</table>

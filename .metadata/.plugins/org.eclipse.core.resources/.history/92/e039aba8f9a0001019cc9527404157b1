@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Trang Tin Tức</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+</head>
+<body>
+<!-- Header -->
+    <header>
+        <h1>Header: Thiết kế tự do</h1>
+    </header>
+
+    <!-- Menu -->
+    <nav>
+        <a href="${pageContext.request.contextPath}/home">Trang chủ</a> | 
+        <a href="${pageContext.request.contextPath}/list?cat=vanhoa">Văn hóa</a> | 
+        <a href="${pageContext.request.contextPath}/list?cat=phapluat">Pháp luật</a> | 
+        <a href="${pageContext.request.contextPath}/list?cat=thethao">Thể thao</a>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <main>
+        <jsp:include page="${view}"/>
+    </main>
+
+    <!-- Sidebar -->
+    <aside>
+        <div class="box yellow">5 bản tin được xem nhiều</div>
+        <div class="box gray">5 bản tin mới nhất</div>
+        <div class="box green">5 bản tin đã bạn đã xem</div>
+    </aside>
+
+    <!-- Footer -->
+    <footer>
+        Footer: Thiết kế tự do
+    </footer>
+</body>
+</body>
+</html>

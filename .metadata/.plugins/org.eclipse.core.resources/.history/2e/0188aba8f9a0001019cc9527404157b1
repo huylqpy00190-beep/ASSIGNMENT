@@ -1,0 +1,5 @@
+<h3>Quản lý tin tức</h3>
+<table border="1" width="100%">
+  <tr><th>Tiêu đề</th><th>Ngày đăng</th><th>Tác giả</th><th>Hành động</th></tr>
+  <tr><td>Tin tức số 1</td><td>2025-10-04</td><td>Phóng viên A</td><td><a href="edit.jsp">Sửa</a> | <a href="#">Xóa</a></td></tr>
+</table>

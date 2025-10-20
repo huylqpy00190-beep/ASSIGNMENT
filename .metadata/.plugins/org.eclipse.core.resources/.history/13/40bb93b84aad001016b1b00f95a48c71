@@ -1,0 +1,51 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="/includes/header.jsp"/>
+<div class="container" style="max-width:900px">
+  <div class="card">
+    <h2><%= "add".equals(request.getParameter("action"))? "Tạo bài mới":"Chỉnh sửa bài viết" %></h2>
+    <form action="<%=request.getContextPath()%>/news" method="post" enctype="multipart/form-data">
+      <% String action = request.getParameter("action");
+         if("edit".equals(action)){
+      %>
+        <input type="hidden" name="action" value="update">
+        <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+      <% } else { %>
+        <input type="hidden" name="action" value="create">
+      <% } %>
+
+      <div class="form-row">
+        <label for="title">Tiêu đề</label>
+        <input id="title" name="title" type="text" value="<%= request.getAttribute("title")==null?"":request.getAttribute("title") %>" required>
+      </div>
+
+      <div class="form-row">
+        <label for="category">Loại tin</label>
+        <select id="category" name="categoryId" required>
+          <% java.util.List categories = (java.util.List) request.getAttribute("categories");
+             if(categories!=null){
+               for(Object c:categories){
+                 java.util.Map cat=(java.util.Map)c;
+          %>
+            <option value="<%=cat.get("id")%>"><%=cat.get("name")%></option>
+          <% } } %>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="image">Hình ảnh (URL hoặc upload)</label>
+        <input id="image" name="image" type="text" placeholder="URL ảnh" value="<%= request.getAttribute("image")==null?"":request.getAttribute("image")%>">
+      </div>
+
+      <div class="form-row">
+        <label for="content">Nội dung</label>
+        <textarea id="content" name="content" required><%= request.getAttribute("content")==null?"":request.getAttribute("content")%></textarea>
+      </div>
+
+      <div>
+        <button class="button" type="submit">Lưu</button>
+        <a class="button secondary" href="<%=request.getContextPath()%>/reporter_dashboard.jsp">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>
+<jsp:include page="/includes/footer.jsp"/>

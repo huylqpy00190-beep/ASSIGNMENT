@@ -1,6 +1,0 @@
-<h3>Newsletter</h3>
-<form>
-  <label>Email người nhận:</label><br>
-  <input type="email" name="email"><br>
-  <button type="submit">Gửi bản tin</button>
-</form>

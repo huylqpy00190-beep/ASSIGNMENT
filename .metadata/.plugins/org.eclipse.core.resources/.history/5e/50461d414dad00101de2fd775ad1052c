@@ -1,0 +1,49 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="/includes/header.jsp"/>
+<div class="container">
+  <div class="main">
+    <div>
+      <div class="card news-detail">
+        <% java.util.Map news = (java.util.Map) request.getAttribute("news");
+           if(news!=null){
+        %>
+          <h1><%=news.get("title")%></h1>
+          <div class="meta"><%=news.get("postedDate")%> • <%=news.get("authorName")%> • <%=news.get("viewCount")%> lượt xem</div>
+          <div style="height:12px"></div>
+          <img src="<%=news.get("image")%>" alt="" style="width:100%;max-height:420px;object-fit:cover;border-radius:8px">
+          <div class="content" style="margin-top:14px"><%=news.get("content")%></div>
+
+          <div style="height:18px"></div>
+          <h3>Các tin cùng loại</h3>
+          <div>
+            <% java.util.List related = (java.util.List) request.getAttribute("related");
+               if(related!=null){
+                 for(Object o:related){
+                   java.util.Map r=(java.util.Map)o;
+            %>
+              <div style="margin:8px 0;"><a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=r.get("id")%>"><%=r.get("title")%></a></div>
+            <% } } %>
+          </div>
+        <% } else { %>
+          <p>Tin không tồn tại.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <jsp:include page="/includes/menu.jsp"/>
+      <div style="height:16px"></div>
+      <div class="card">
+        <h3>Tin nổi bật</h3>
+        <% java.util.List hot = (java.util.List) request.getAttribute("hotSidebar");
+           if(hot!=null){
+             for(Object o:hot){
+               java.util.Map n=(java.util.Map)o;
+        %>
+          <div style="padding:8px 0;"><a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=n.get("id")%>"><%=n.get("title")%></a></div>
+        <% } } %>
+      </div>
+    </aside>
+  </div>
+</div>
+<jsp:include page="/includes/footer.jsp"/>

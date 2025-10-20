@@ -1,0 +1,17 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ABC News</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
+</head>
+<body>
+<header>
+  <h1>ABC News</h1>
+  <nav>
+    <a href="${pageContext.request.contextPath}/trang-chu">Trang chủ</a> |
+    <a href="${pageContext.request.contextPath}/tin-theo-loai">Loại tin</a>
+  </nav>
+</header>
+<main>

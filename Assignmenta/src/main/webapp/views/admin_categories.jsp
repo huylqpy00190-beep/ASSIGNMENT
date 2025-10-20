@@ -1,0 +1,34 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="includes/header.jsp"/>
+<div class="container">
+  <div class="card">
+    <h2>Quản lý loại tin</h2>
+    <div style="margin-top:12px">
+      <a class="button" href="<%=request.getContextPath()%>/admin/categories?action=add">Thêm loại tin</a>
+    </div>
+    <div style="margin-top:12px">
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="color:var(--muted)"><th style="padding:8px">Mã</th><th style="padding:8px">Tên</th><th style="padding:8px">Hành động</th></tr></thead>
+        <tbody>
+          <% java.util.List cats = (java.util.List) request.getAttribute("categories");
+             if(cats!=null){
+               for(Object o:cats){
+                 java.util.Map c=(java.util.Map)o;
+          %>
+            <tr>
+              <td style="padding:8px"><%=c.get("id")%></td>
+              <td style="padding:8px"><%=c.get("name")%></td>
+              <td style="padding:8px">
+                <a class="button secondary" href="<%=request.getContextPath()%>/admin/categories?action=edit&id=<%=c.get("id")%>">Sửa</a>
+                <a class="button secondary" href="<%=request.getContextPath()%>/admin/categories?action=delete&id=<%=c.get("id")%>" onclick="return confirm('Xóa loại tin?')">Xóa</a>
+              </td>
+            </tr>
+          <% } } else { %>
+            <tr><td colspan="3" style="padding:12px">Chưa có loại tin.</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<jsp:include page="includes/footer.jsp"/>

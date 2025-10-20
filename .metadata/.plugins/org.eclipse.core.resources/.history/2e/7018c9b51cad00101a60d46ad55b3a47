@@ -1,0 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="layout/admin-header.jsp" %>
+<h2>Sửa người dùng</h2>
+<form action="${pageContext.request.contextPath}/quan-ly-nguoi-dung/sua" method="post">
+ID: <input name="id" readonly value='${u.id}'/><br/>Mật khẩu: <input name="password" value='${u.password}'/><br/>Họ tên: <input name="fullname" value='${u.fullname}'/><br/>SĐT: <input name="mobile" value='${u.mobile}'/><br/>Email: <input name="email" value='${u.email}'/><br/>Vai trò: <input type="checkbox" name="role" ${u.role ? 'checked' : ''}/> (check = Quản trị)<br/>
+<button type="submit">Lưu</button>
+</form>

@@ -1,0 +1,14 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="layout/admin-header.jsp" %>
+<h2>Sửa tin</h2>
+<form action="${pageContext.request.contextPath}/quan-ly-tin/sua" method="post" enctype="multipart/form-data">
+ID: <input name="id" readonly value="${n.id}"/><br/>
+Tiêu đề: <input name="title" value="${n.title}"/><br/>
+Nội dung:<br/><textarea name="content" rows="6" cols="60">${n.content}</textarea><br/>
+Ảnh: <input type="file" name="image"/><br/>
+<c:if test='${not empty n.image}'>Hiện có: <img src="${pageContext.request.contextPath}/uploads/${n.image}" width="120"/></c:if><br/>
+Loại tin: <select name="categoryId">
+  <c:forEach var="c" items="${cats}"><option value="${c.id}" ${c.id==n.categoryId ? 'selected' : ''}>${c.name}</option></c:forEach>
+</select><br/>
+<button type="submit">Lưu</button>
+</form>

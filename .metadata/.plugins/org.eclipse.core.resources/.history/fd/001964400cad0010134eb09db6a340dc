@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>${pageTitle != null ? pageTitle : "Trang Tin Tức"}</title>
+    <link rel="stylesheet" href="../../Css/style.css">
+</head>
+<body>
+<header>
+    <h2>Header: Thiết kế tự do</h2>
+</header>
+
+<nav>
+    <a href="home.jsp">Trang chủ</a> :
+    <a href="list.jsp?cat=vanhoa">Văn hóa</a> :
+    <a href="list.jsp?cat=phapluat">Pháp luật</a> :
+    <a href="list.jsp?cat=thethao">Thể thao</a> :
+    ...
+</nav>
+
+<div class="container">
+    <main>
+        <!-- Nội dung thay đổi -->
+        <jsp:include page="${contentPage}" />
+    </main>
+
+    <aside>
+        <div class="card yellow">5 bản tin được xem nhiều</div>
+        <div class="card gray">5 bản tin mới nhất</div>
+        <div class="card green">5 bản tin đã bạn đã xem</div>
+        <div class="card white">
+            <input type="email" placeholder="Newsletter" style="width:100%;padding:5px;">
+        </div>
+    </aside>
+</div>
+
+<footer>
+    <p>Footer: Thiết kế tự do</p>
+</footer>
+</body>
+</html>

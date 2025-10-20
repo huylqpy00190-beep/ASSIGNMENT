@@ -1,0 +1,19 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- menu.jsp (có thể include trong sidebar nếu cần) --%>
+<div class="card">
+  <h3>Danh mục</h3>
+  <ul style="padding-left:0;margin-top:12px;">
+    <%-- giả sử attribute categories được servlet set vào request --%>
+    <java.util.List categories = (java.util.List) request.getAttribute("categories");
+       if(categories != null){
+         for(Object c: categories){
+           java.util.Map cat = (java.util.Map) c;
+    %>
+      <li style="list-style:none;margin:8px 0;">
+        <a href="<%=request.getContextPath()%%>/news_list.jsp?category=<%=cat.get("id")%>"><%=cat.get("name")%></a>
+      </li>
+    <% } } else { %>
+      <li style="list-style:none;margin:8px 0;"><a href="<%=request.getContextPath()%>/news_list.jsp">Tất cả</a></li>
+    <%} %>
+  </ul>
+</div>

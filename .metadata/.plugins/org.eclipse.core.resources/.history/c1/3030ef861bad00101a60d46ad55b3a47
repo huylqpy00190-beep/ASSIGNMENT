@@ -1,0 +1,9 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="layout/admin-header.jsp" %>
+<h2>Quản lý người dùng</h2>
+<a href="${pageContext.request.contextPath}/quan-ly-nguoi-dung/them">Thêm người dùng</a>
+<table border="1"><tr><th>ID</th><th>Họ tên</th><th>Email</th><th>Vai trò</th><th>Hành động</th></tr>
+<c:forEach var="u" items="${list}">
+<tr><td>${u.id}</td><td>${u.fullname}</td><td>${u.email}</td><td><c:out value='${u.role ? "Quản trị" : "Phóng viên"}'/></td><td><a href='${pageContext.request.contextPath}/quan-ly-nguoi-dung/sua?id=${u.id}'>Sửa</a> | <a href='${pageContext.request.contextPath}/quan-ly-nguoi-dung/xoa?id=${u.id}'>Xóa</a></td></tr>
+</c:forEach>
+</table>

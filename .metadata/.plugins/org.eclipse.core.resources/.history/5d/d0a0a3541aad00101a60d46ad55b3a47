@@ -1,0 +1,26 @@
+package com.abcnews.controller;
+
+import com.abcnews.dao.NewsDAO;
+import com.abcnews.model.News;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+import java.io.IOException;
+import java.util.List;
+
+@WebServlet(name = "HomeServlet", urlPatterns = {"/trang-chu"})
+public class HomeServlet extends HttpServlet {
+    private NewsDAO newsDAO = new NewsDAO();
+
+    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws ServletException, IOException {
+        try {
+            List<News> top = newsDAO.getTopNews(5);
+            request.setAttribute("topNews", top);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Lỗi khi tải dữ liệu: " + e.getMessage());
+        }
+        request.getRequestDispatcher("/WEB-INF/views/trang-chu.jsp").forward(request, response);
+    }
+}

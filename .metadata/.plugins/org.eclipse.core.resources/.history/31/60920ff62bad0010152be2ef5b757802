@@ -1,0 +1,41 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- header.jsp --%>
+<link rel="stylesheet" href=".../css/style.css">
+<div class="header">
+  <div class="container">
+    <div class="top">
+      <div class="logo">
+        <div class="mark">ABC</div>
+        <div>
+          <div style="font-size:14px;opacity:.95">ABC News</div>
+          <div style="font-size:12px;opacity:.85">Tin tức trực tuyến</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <%-- nếu có user trong session hiển thị tên --%>
+        <%
+          Object user = session.getAttribute("user");
+          if(user != null){
+        %>
+          <div style="font-weight:600">Xin chào, <%= ((java.util.Map)user).get("fullname") %></div>
+          <a href="<%=request.getContextPath()%>/auth/logout" style="color:white;text-decoration:underline;font-size:13px">Đăng xuất</a>
+        <% } else { %>
+          <a href="<%=request.getContextPath()%>/login.jsp" style="color:white;text-decoration:underline;font-size:13px">Đăng nhập</a>
+        <% } %>
+      </div>
+    </div>
+    <div class="nav" style="margin-top:12px;">
+      <a href="<%=request.getContextPath()%>/index.jsp">Trang chủ</a>
+      <a href="<%=request.getContextPath()%>/news_list.jsp">Tin tức</a>
+      <a href="<%=request.getContextPath()%>/newsletter.jsp">Đăng ký nhận tin</a>
+      <% if(session.getAttribute("user") != null){
+           boolean isAdmin = Boolean.TRUE.equals(((java.util.Map)session.getAttribute("user")).get("role"));
+           if(isAdmin){ %>
+             <a href="<%=request.getContextPath()%>/admin_dashboard.jsp">Admin</a>
+      <%   } else { %>
+             <a href="<%=request.getContextPath()%>/reporter_dashboard.jsp">Phóng viên</a>
+      <%   }
+         } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+package com.abcnews.controller;
+
+import com.abcnews.dao.NewsletterDAO;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import java.io.IOException;
+
+@WebServlet(name="NewsletterServlet", urlPatterns = {"/newsletter/subscribe"})
+public class NewsletterServlet extends HttpServlet {
+    private NewsletterDAO dao = new NewsletterDAO();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        try {
+            dao.subscribe(email);
+            response.getWriter().write("OK");
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+}

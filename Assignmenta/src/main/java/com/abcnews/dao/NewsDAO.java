@@ -2,7 +2,12 @@ package com.abcnews.dao;
 
 import com.abcnews.model.News;
 import com.abcnews.utils.DBContext;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,4 +99,15 @@ public class NewsDAO {
         n.setHome(rs.getBoolean("Home"));
         return n;
     }
+
+public void setStatus(String id, String status) throws Exception {
+    String sql = "UPDATE News SET Status = ? WHERE Id = ?";
+    try (java.sql.Connection conn = com.abcnews.utils.DBContext.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, status);
+        ps.setString(2, id);
+        ps.executeUpdate();
+    }
+}
+
 }

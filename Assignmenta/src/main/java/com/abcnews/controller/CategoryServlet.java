@@ -2,55 +2,83 @@ package com.abcnews.controller;
 
 import com.abcnews.dao.CategoryDAO;
 import com.abcnews.model.Category;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name="CategoryServlet", urlPatterns = {"/quan-ly-loai-tin", "/quan-ly-loai-tin/them", "/quan-ly-loai-tin/sua", "/quan-ly-loai-tin/xoa"})
+@WebServlet(name = "CategoryServlet",
+        urlPatterns = {
+            "/quan-ly-loai-tin",
+            "/quan-ly-loai-tin/them",
+            "/quan-ly-loai-tin/sua",
+            "/quan-ly-loai-tin/xoa"
+        })
 public class CategoryServlet extends HttpServlet {
+
     private CategoryDAO dao = new CategoryDAO();
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String uri = request.getRequestURI();
+
         try {
             if (uri.endsWith("/quan-ly-loai-tin")) {
-                List<Category> list = dao.findAll();
-                request.setAttribute("list", list);
-                request.getRequestDispatcher("/WEB-INF/views/quan-ly-loai-tin.jsp").forward(request, response);
-            } else if (uri.endsWith("/quan-ly-loai-tin/them")) {
-                request.getRequestDispatcher("/WEB-INF/views/them-loai-tin.jsp").forward(request, response);
+                // Hiển thị danh sách loại tin
+            	if (uri.endsWith("/quan-ly-loai-tin")) {
+            	    List<Category> list = dao.findAll();
+            	    request.setAttribute("categories", list);
+            	    request.getRequestDispatcher("/views/admin/admin_categories.jsp")
+            	           .forward(request, response);
+            	}
+
+
+
             } else if (uri.endsWith("/quan-ly-loai-tin/sua")) {
                 String id = request.getParameter("id");
                 Category c = dao.findById(id);
-                request.setAttribute("c", c);
-                request.getRequestDispatcher("/WEB-INF/views/sua-loai-tin.jsp").forward(request, response);
+                request.setAttribute("category", c);
+                request.getRequestDispatcher("/views/admin/admin_categories.jsp")
+                .forward(request, response);
+
+
             } else if (uri.endsWith("/quan-ly-loai-tin/xoa")) {
-                dao.delete(request.getParameter("id"));
-                response.sendRedirect(request.getContextPath()+"/quan-ly-loai-tin");
+                String id = request.getParameter("id");
+                dao.delete(id);
+                response.sendRedirect(request.getContextPath() + "/quan-ly-loai-tin");
             }
+
         } catch (Exception e) {
-            throw new ServletException(e);
+            throw new ServletException("Lỗi xử lý loại tin", e);
         }
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String uri = request.getRequestURI();
+
         try {
-            if (request.getRequestURI().endsWith("/quan-ly-loai-tin/them")) {
+            if (uri.endsWith("/quan-ly-loai-tin/them")) {
                 Category c = new Category();
                 c.setId(request.getParameter("id"));
                 c.setName(request.getParameter("name"));
                 dao.insert(c);
-                response.sendRedirect(request.getContextPath()+"/quan-ly-loai-tin");
-            } else if (request.getRequestURI().endsWith("/quan-ly-loai-tin/sua")) {
+                response.sendRedirect(request.getContextPath() + "/quan-ly-loai-tin");
+
+            } else if (uri.endsWith("/quan-ly-loai-tin/sua")) {
                 Category c = new Category();
                 c.setId(request.getParameter("id"));
                 c.setName(request.getParameter("name"));
                 dao.update(c);
-                response.sendRedirect(request.getContextPath()+"/quan-ly-loai-tin");
+                response.sendRedirect(request.getContextPath() + "/quan-ly-loai-tin");
             }
+
         } catch (Exception e) {
-            throw new ServletException(e);
+            throw new ServletException("Lỗi thêm/cập nhật loại tin", e);
         }
     }
 }
+

@@ -1,5 +1,0 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="layout/admin-header.jsp" %>
-<h2>${n.title}</h2>
-<c:if test='${not empty n.image}'><img src='${pageContext.request.contextPath}/uploads/${n.image}' width='300'/></c:if>
-<p>${n.content}</p>

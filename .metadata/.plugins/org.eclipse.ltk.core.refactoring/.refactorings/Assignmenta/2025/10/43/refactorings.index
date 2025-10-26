@@ -20,3 +20,8 @@
 1760903310414	Move 'views' to 'webapp'
 1760903396040	Move 'index.jsp' to 'views'
 1760921801275	Delete element
+1761099007129	Rename package 'com.fpt.controllers'
+1761229612882	Move 'AuthServlet.java' to 'controller'
+1761229999215	Delete element
+1761230984169	Delete element
+1761240349871	Delete element

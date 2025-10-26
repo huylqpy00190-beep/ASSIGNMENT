@@ -1,5 +1,0 @@
-127.0.0.1 - - [10/Oct/2025:09:10:17 +0700] "GET / HTTP/1.1" 404 751
-0:0:0:0:0:0:0:1 - - [10/Oct/2025:09:10:19 +0700] "GET /Assignmenta/views/DocGia/layoutDocGia.jsp HTTP/1.1" 200 1044
-0:0:0:0:0:0:0:1 - - [10/Oct/2025:09:10:19 +0700] "GET /Assignmenta/Css/style.css HTTP/1.1" 200 786
-0:0:0:0:0:0:0:1 - - [10/Oct/2025:09:10:19 +0700] "GET /favicon.ico HTTP/1.1" 404 762
-0:0:0:0:0:0:0:1 - - [10/Oct/2025:09:10:50 +0700] "GET /Assignmenta/views/PhongVien&QuanTriVien/layoutPV&QTV.jsp HTTP/1.1" 200 801

@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
-import org.apache.tomcat.jakartaee.commons.io.FilenameUtils;
+import org.apache.commons.io.FilenameUtils;
 
 public class UploadUtils {
     public static String saveImage(Part part, String uploadPath) throws Exception {

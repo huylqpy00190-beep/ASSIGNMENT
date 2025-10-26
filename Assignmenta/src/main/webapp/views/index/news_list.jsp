@@ -1,0 +1,56 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<jsp:include page="../includes/header.jsp"/>
+<div class="container">
+  <div class="main">
+    <div>
+      <div class="card">
+        <h2>Danh sách tin</h2>
+        <% String category = request.getParameter("category");
+           java.util.List news = (java.util.List) request.getAttribute("newsList");
+           if(news!=null && !news.isEmpty()){
+             for(Object o: news){
+               java.util.Map n = (java.util.Map)o;
+        %>
+          <div class="news-item">
+            <img class="news-thumb" src="<%=n.get("image")%>" alt="">
+            <div class="news-meta">
+              <h3><a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=n.get("id")%>"><%=n.get("title")%></a></h3>
+              <div class="meta"><%=n.get("postedDate")%> • <%=n.get("authorName")%></div>
+              <p style="margin-top:8px;color:#444"><%= (n.get("shortContent")!=null?n.get("shortContent"):"") %></p>
+            </div>
+          </div>
+        <% } } else { %>
+          <p>Không có tin cho danh mục này.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <jsp:include page="../includes/menu.jsp"/>
+      <div style="height:16px"></div>
+      <div class="card">
+        <h3>Tin mới nhất</h3>
+        <% java.util.List latest = (java.util.List) request.getAttribute("latestSidebar");
+           if(latest!=null){
+             for(Object o: latest){
+               java.util.Map n=(java.util.Map)o;
+        %>
+          <div style="padding:8px 0;border-bottom:1px solid #f1f1f1">
+            <a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=n.get("id")%>"><%=n.get("title")%></a>
+          </div>
+        <% } } %>
+      </div>
+    </aside>
+  </div>
+</div>
+<jsp:include page="../includes/footer.jsp"/>
+</body>
+</html>

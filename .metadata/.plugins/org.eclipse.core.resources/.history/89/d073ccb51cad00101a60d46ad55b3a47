@@ -1,7 +1,0 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="layout/admin-header.jsp" %>
-<h2>Thêm người dùng</h2>
-<form action="${pageContext.request.contextPath}/quan-ly-nguoi-dung/them" method="post">
-ID: <input name="id"/><br/>Mật khẩu: <input name="password"/><br/>Họ tên: <input name="fullname"/><br/>SĐT: <input name="mobile"/><br/>Email: <input name="email"/><br/>Vai trò: <input type="checkbox" name="role"/> (check = Quản trị)<br/>
-<button type="submit">Lưu</button>
-</form>

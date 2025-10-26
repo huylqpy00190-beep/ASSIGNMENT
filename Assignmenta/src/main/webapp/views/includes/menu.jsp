@@ -1,26 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <div class="card">
-  <h3>Danh mục</h3>
-  <ul style="padding-left:0;margin-top:12px;">
-    <%-- giả sử attribute categories được servlet set vào request --%>
-    <java.util.List categories = (java.util.List) request.getAttribute("categories");
-       if(categories != null){
-         for(Object c: categories){
-           java.util.Map cat = (java.util.Map) c;
-    %>
-      <li style="list-style:none;margin:8px 0;">
-        <a href="<%=request.getContextPath()%>/news_list.jsp?category=<%=cat.get("id")%>"><%=cat.get("name")%></a>
-      </li>
-    <% } else { %>
-      <li style="list-style:none;margin:8px 0;"><a href="<%=request.getContextPath()%>/news_list.jsp">Tất cả</a></li>
-    <%}%>
-  </ul>
+    <h3>Danh mục</h3>
+    <ul style="padding-left:0; margin-top:12px;">
+        <%
+            java.util.List categories = (java.util.List) request.getAttribute("categories");
+            if (categories != null) {
+                for (Object c : categories) {
+                    java.util.Map cat = (java.util.Map) c;
+        %>
+                    <li style="list-style:none;margin:8px 0;">
+                        <a href="<%=request.getContextPath()%>/news_list.jsp?category=<%=cat.get("id")%>">
+                            <%=cat.get("name")%>
+                        </a>
+                    </li>
+        <%
+                }
+            } else {
+        %>
+                <li style="list-style:none;margin:8px 0;">
+                    <a href="../index/news_detail.jsp">Tất cả</a>
+                </li>
+        <%
+            }
+        %>
+    </ul>
 </div>
+

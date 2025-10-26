@@ -107,4 +107,48 @@ public class UserDAO {
         }
         return null;
     }
+
+public void requestReporter(String fullname, String email) throws Exception {
+    String sql = "INSERT INTO ReporterRequests(Fullname, Email) VALUES(?, ?)";
+    try (java.sql.Connection conn = com.abcnews.utils.DBContext.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, fullname);
+        ps.setString(2, email);
+        ps.executeUpdate();
+    }
+}
+
+public java.util.List<java.util.Map<String,Object>> getPendingReporterRequests() throws Exception {
+    java.util.List<java.util.Map<String,Object>> list = new java.util.ArrayList<>();
+    String sql = "SELECT Id, Fullname, Email, RequestedAt FROM ReporterRequests ORDER BY RequestedAt DESC";
+    try (java.sql.Connection conn = com.abcnews.utils.DBContext.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+         java.sql.ResultSet rs = ps.executeQuery()) {
+        while(rs.next()){
+            java.util.Map<String,Object> m = new java.util.HashMap<>();
+            m.put("id", rs.getString("Id"));
+            m.put("fullname", rs.getString("Fullname"));
+            m.put("email", rs.getString("Email"));
+            m.put("requestedAt", rs.getTimestamp("RequestedAt"));
+            list.add(m);
+        }
+    }
+    return list;
+}
+
+public void approveReporterByEmail(String email) throws Exception {
+    String sql = "UPDATE Users SET Role = 1 WHERE Email = ?";
+    try (java.sql.Connection conn = com.abcnews.utils.DBContext.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, email);
+        ps.executeUpdate();
+    }
+    String sql2 = "DELETE FROM ReporterRequests WHERE Email = ?";
+    try (java.sql.Connection conn = com.abcnews.utils.DBContext.getConnection();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql2)) {
+        ps.setString(1, email);
+        ps.executeUpdate();
+    }
+}
+
 }

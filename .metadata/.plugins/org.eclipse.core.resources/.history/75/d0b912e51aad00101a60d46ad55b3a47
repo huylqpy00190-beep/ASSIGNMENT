@@ -1,7 +1,0 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="layout/admin-header.jsp" %>
-<h2>Đăng nhập</h2>
-<c:if test='${not empty error}'><p style='color:red'>${error}</p></c:if>
-<form action='${pageContext.request.contextPath}/dang-nhap' method='post'>
-Tên đăng nhập: <input name='id'/><br/>Mật khẩu: <input name='password' type='password'/><br/><button type='submit'>Đăng nhập</button>
-</form>

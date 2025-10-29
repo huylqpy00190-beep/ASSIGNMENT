@@ -1,10 +1,11 @@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Quản lý người dùng</title>
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css">
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
@@ -14,7 +15,7 @@
     <h2>Quản lý người dùng</h2>
 
     <!-- Form thêm người dùng -->
-    <form action="<%= request.getContextPath() %>/quan-ly-nguoi-dung/them" method="post" style="margin-top:16px">
+    <form action="${pageContext.request.contextPath}/quan-ly-nguoi-dung/them" method="post" style="margin-top:16px">
       <div style="display:flex;gap:12px;align-items:center;">
         <input type="text" name="id" placeholder="Mã người dùng" required>
         <input type="text" name="fullname" placeholder="Họ tên" required>
@@ -29,7 +30,7 @@
     </form>
 
     <div style="margin-top:16px;">
-      <a class="button" href="approve_reporters.jsp">Duyệt phóng viên</a>
+      <a class="button" href="${pageContext.request.contextPath}/quan-ly-nguoi-dung/duyet-phong-vien">Duyệt phóng viên</a>
     </div>
 
     <!-- Danh sách người dùng -->
@@ -57,3 +58,4 @@
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 </html>
+	

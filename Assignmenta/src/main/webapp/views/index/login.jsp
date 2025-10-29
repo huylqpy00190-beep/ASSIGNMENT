@@ -3,8 +3,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="../css/style.css">
+<title>Đăng nhập</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css">
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>

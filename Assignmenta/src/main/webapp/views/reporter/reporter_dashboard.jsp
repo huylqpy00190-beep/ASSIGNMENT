@@ -1,20 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="../css/style.css">
+<title>Trang phóng viên</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css">
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
+
 <div class="container">
   <div class="card">
     <h2>Trang phóng viên</h2>
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div>Danh sách bài viết của bạn</div>
-      <a class="button" href="reporter_news_form.jsp?action=add">Viết tin mới</a>
+      <!-- ✅ Gọi servlet để nạp danh mục -->
+      <a class="button" href="${pageContext.request.contextPath}/pending-news?action=add">Viết tin mới</a>
     </div>
+
     <div style="margin-top:12px">
       <table style="width:100%;border-collapse:collapse">
         <thead>
@@ -32,12 +36,17 @@
                  java.util.Map n=(java.util.Map)o;
           %>
             <tr>
-              <td style="padding:8px"><a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=n.get("id")%>"><%=n.get("title")%></a></td>
-              <td style="padding:8px"><%=n.get("postedDate")%></td>
+              <td style="padding:8px">
+                <a href="${pageContext.request.contextPath}/chi-tiet?id=<%=n.get("id")%>"><%=n.get("title")%></a>
+              </td>
+              <td style="padding:8px"><fmt:formatDate value="${n.postedDateAsDate}" pattern="dd/MM/yyyy HH:mm"/></td>
               <td style="padding:8px"><%=n.get("viewCount")%></td>
               <td style="padding:8px">
-                <a class="button secondary" href="<%=request.getContextPath()%>/reporter_news_form.jsp?action=edit&id=<%=n.get("id")%>">Sửa</a>
-                <a class="button secondary" href="<%=request.getContextPath()%>/news?action=delete&id=<%=n.get("id")%>" onclick="return confirm('Bạn có muốn xóa?')">Xóa</a>
+                <a class="button secondary" href="${pageContext.request.contextPath}/pending-news?action=edit&id=<%=n.get("id")%>">Sửa</a>
+                <<a class="button secondary"
+				   href="${pageContext.request.contextPath}/pending-news?action=delete&id=<%=n.get("id")%>"
+				   onclick="return confirm('Bạn có muốn xóa bài viết này không?')">Xóa</a>
+
               </td>
             </tr>
           <% } } else { %>
@@ -48,6 +57,7 @@
     </div>
   </div>
 </div>
+
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 </html>

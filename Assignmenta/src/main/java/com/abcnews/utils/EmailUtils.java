@@ -3,12 +3,19 @@ package com.abcnews.utils;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+
 import java.util.List;
 import java.util.Properties;
 
 public class EmailUtils {
-    // Configure SMTP in application - example uses Gmail SMTP (less secure app or app-password required)
-    public static void sendBulk(List<String> recipients, String subject, String htmlContent, String smtpHost, String smtpUser, String smtpPass, int smtpPort, boolean useTls) throws Exception {
+
+    /**
+     * Send bulk html emails. Provide smtpHost, smtpUser, smtpPass, smtpPort, useTls.
+     */
+    public static void sendBulk(List<String> recipients, String subject, String htmlContent,
+                                String smtpHost, String smtpUser, String smtpPass, int smtpPort, boolean useTls) throws Exception {
+        if (recipients == null || recipients.isEmpty()) return;
+
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", String.valueOf(useTls));
@@ -20,6 +27,7 @@ public class EmailUtils {
                 return new PasswordAuthentication(smtpUser, smtpPass);
             }
         });
+
         for (String to : recipients) {
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress(smtpUser));
@@ -30,3 +38,5 @@ public class EmailUtils {
         }
     }
 }
+
+

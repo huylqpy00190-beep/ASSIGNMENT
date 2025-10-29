@@ -83,6 +83,10 @@ body{
   border-radius:var(--radius);
   box-shadow:0 6px 18px rgba(18,38,63,0.06);
   padding:16px;
+  /* FIX 1: Đảm bảo không cắt nội dung, đặt position để z-index hoạt động */
+  position: relative; 
+  z-index: 1; 
+  overflow: visible !important; 
 }
 
 /* news list */
@@ -149,4 +153,10 @@ textarea{min-height:160px;resize:vertical}
   .main{grid-template-columns:1fr}
   .nav{flex-wrap:wrap}
   .news-thumb{width:120px;height:80px}
+}
+
+/* FIX 2: Bổ sung Z-index cho dropdown để khắc phục lỗi bị che */
+.form-row select, 
+.form-row select:focus {
+    z-index: 1000 !important; 
 }

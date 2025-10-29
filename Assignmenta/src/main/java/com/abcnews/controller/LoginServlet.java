@@ -1,45 +1,33 @@
 package com.abcnews.controller;
 
-
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-import com.abcnews.utils.DBContext;
-
+import com.abcnews.dao.UserDAO;
+import com.abcnews.model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
+import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/dang-nhap"})
 public class LoginServlet extends HttpServlet {
+    private final UserDAO dao = new UserDAO();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String id = request.getParameter("id");
-        String password = request.getParameter("password");
+        request.getRequestDispatcher("/views/index/login.jsp").forward(request, response);
+    }
 
-        try (Connection conn = DBContext.getConnection()) {
-            String sql = "SELECT * FROM Users WHERE Id=? AND Password=?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, id);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            request.setCharacterEncoding("UTF-8");
+            String id = request.getParameter("id");
+            String password = request.getParameter("password");
+            User u = dao.login(id, password);
+            if (u != null) {
                 HttpSession session = request.getSession();
-                java.util.Map<String, Object> userMap = new java.util.HashMap<>();
-                userMap.put("fullname", rs.getString("Fullname"));
-                userMap.put("role", rs.getBoolean("Role"));
-                session.setAttribute("user", userMap);  // ✅ header.jsp đọc được
-
-                if (rs.getBoolean("Role")) {
+                session.setAttribute("user", u); // store User object
+                if (u.isRole()) {
                     response.sendRedirect(request.getContextPath() + "/views/admin/admin_dashboard.jsp");
                 } else {
                     response.sendRedirect(request.getContextPath() + "/views/reporter/reporter_dashboard.jsp");
@@ -53,4 +41,3 @@ public class LoginServlet extends HttpServlet {
         }
     }
 }
-

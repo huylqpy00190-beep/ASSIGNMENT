@@ -1,11 +1,13 @@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="../css/style.css">
+<title>ABC News - Trang chủ</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css">
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
@@ -15,21 +17,25 @@
       <div class="card">
         <h2>Tin trang nhất</h2>
         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px;">
-          <% java.util.List hot = (java.util.List) request.getAttribute("homeNews");
-             if(hot!=null){
-               for(Object o:hot){
-                 java.util.Map n = (java.util.Map)o;
-          %>
-           <div style="display:flex;gap:12px;align-items:flex-start;">
-             <img src="<%=n.get("image")%>" class="news-thumb" alt="">
-             <div>
-               <h3><a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=n.get("id")%>"><%=n.get("title")%></a></h3>
-               <div class="meta"><%=n.get("postedDate")%> - <%=n.get("viewCount")%> lượt xem</div>
-             </div>
-           </div>
-          <% }} else { %>
-            <p>Không có tin trang nhất.</p>
-          <% } %>
+          <c:choose>
+            <c:when test="${not empty homeNews}">
+              <c:forEach var="n" items="${homeNews}">
+               <div style="display:flex;gap:12px;align-items:flex-start;">
+                 <img src="${pageContext.request.contextPath}/uploads/${n.image}" class="news-thumb" alt="">
+                 <div>
+                   <h3><a href="${pageContext.request.contextPath}/chi-tiet?id=${n.id}">${n.title}</a></h3>
+                   <div class="meta">
+					    <fmt:formatDate value="${n.postedDateAsUtilDate}" pattern="dd/MM/yyyy HH:mm"/>
+					    - ${n.viewCount} lượt xem
+					</div>
+                 </div>
+               </div>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <p>Không có tin trang nhất.</p>
+            </c:otherwise>
+          </c:choose>
         </div>
       </div>
 
@@ -37,37 +43,44 @@
 
       <div class="card">
         <h2>Tin mới nhất</h2>
-        <% java.util.List latest = (java.util.List) request.getAttribute("latestNews");
-           if(latest!=null){
-             for(Object o:latest){
-               java.util.Map n = (java.util.Map)o;
-        %>
-          <div class="news-item">
-            <img class="news-thumb" src="<%=n.get("image")%>" alt="">
-            <div class="news-meta">
-              <h3><a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=n.get("id")%>"><%=n.get("title")%></a></h3>
-              <div class="meta"><%=n.get("postedDate")%> - <%=n.get("categoryName")%></div>
-            </div>
-          </div>
-        <% } } else { %>
-          <p>Không có tin mới.</p>
-        <% } %>
+        <c:choose>
+          <c:when test="${not empty latestNews}">
+            <c:forEach var="n" items="${latestNews}">
+              <div class="news-item">
+                <img class="news-thumb" src="${pageContext.request.contextPath}/uploads/${n.image}" alt="">
+                <div class="news-meta">
+                  <h3><a href="${pageContext.request.contextPath}/chi-tiet?id=${n.id}">${n.title}</a></h3>
+                  <div class="meta">
+					  <fmt:formatDate value="${n.postedDateAsUtilDate}" pattern="dd/MM/yyyy HH:mm"/>
+					  - ${categoryNames[n.categoryId]}
+					</div>
+                </div>
+              </div>
+            </c:forEach>
+          </c:when>
+          <c:otherwise>
+            <p>Không có tin mới.</p>
+          </c:otherwise>
+        </c:choose>
       </div>
     </div>
 
     <aside class="sidebar">
+      <jsp:include page="../includes/menu.jsp"/>
+      <div style="height:16px"></div>
       <div class="card">
         <h3>Tin nổi bật</h3>
         <ul class="small-list" style="padding-left:0;margin-top:8px;">
-          <% java.util.List hot5 = (java.util.List) request.getAttribute("hotNews");
-             if(hot5!=null){
-               for(Object o: hot5){
-                 java.util.Map n = (java.util.Map)o;
-          %>
-           <li><a href="<%=request.getContextPath()%>/news_detail.jsp?id=<%=n.get("id")%>"><%=n.get("title")%></a></li>
-          <% } } else { %>
-            <li>Không có tin nổi bật.</li>
-          <% } %>
+          <c:choose>
+            <c:when test="${not empty hotNews}">
+              <c:forEach var="n" items="${hotNews}">
+               <li><a href="${pageContext.request.contextPath}/chi-tiet?id=${n.id}">${n.title}</a></li>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <li>Không có tin nổi bật.</li>
+            </c:otherwise>
+          </c:choose>
         </ul>
       </div>
 
@@ -75,7 +88,7 @@
 
       <div class="card">
         <h3>Đăng ký nhận tin</h3>
-        <form action="<%=request.getContextPath()%>/newsletter/subscribe" method="post">
+        <form action="${pageContext.request.contextPath}/newsletter/subscribe" method="post">
           <div class="form-row">
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="you@example.com" required>
@@ -90,4 +103,3 @@
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 </html>
-

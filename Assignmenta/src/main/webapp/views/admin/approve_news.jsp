@@ -1,11 +1,12 @@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Duyệt bài viết</title>
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/views/css/style.css">
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
@@ -21,9 +22,9 @@
           <tr>
             <td>${n.title}</td>
             <td>${n.author}</td>
-            <td>${n.postedDate}</td>
+            <td><fmt:formatDate value="${n.postedDateAsDate}" pattern="dd/MM/yyyy HH:mm"/></td>
             <td>
-              <form action="<%= request.getContextPath() %>/quan-ly-tin/duyet-bai" method="post">
+              <form action="${pageContext.request.contextPath}/quan-ly-tin/duyet-bai" method="post">
                 <input type="hidden" name="id" value="${n.id}">
                 <button type="submit" class="button">Phê duyệt</button>
               </form>
@@ -38,3 +39,4 @@
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 </html>
+

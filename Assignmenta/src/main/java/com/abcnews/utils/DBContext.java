@@ -5,15 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBContext {
-
-    static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	static String dburl = "jdbc:sqlserver://localhost;database=News;encrypt=true;trustServerCertificate=true;";
-	static String username = "sa";
-	static String password = "123456";
-
+    private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=News;encrypt=true;trustServerCertificate=true;";
+    private static final String USER = "sa";
+    private static final String PASS = "123456";
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName(driver);
-        return DriverManager.getConnection(dburl, username, password);
+        Class.forName(DRIVER);
+        return DriverManager.getConnection(URL, USER, PASS);
     }
 }
